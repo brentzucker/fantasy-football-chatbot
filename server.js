@@ -23,6 +23,25 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-bot.dialog('/', function (session) {
-    session.send("Hello World");
+// bot.dialog('/', function (session) {
+//     session.send("Hello World");
+// });
+
+bot.dialog('/', new builder.IntentDialog()
+	.matches('/^bot scores', '/scores')
+	.matches('/^bot standings', '/standings')
+	.matches('/^bot transactions', '/transactions') 
+	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
+);
+
+bot.dialog('/scores', function (session) {
+	session.send("Here are the scores");
+});
+
+bot.dialog('/standings', function (session) {
+	session.send("Here are the standings");
+});
+
+bot.dialog('/transactions', function (session) {
+	session.send("Here are the transactions");
 });
