@@ -2,9 +2,12 @@
   "name": "fantasy-football-chatbot",
   "version": "1.0.0",
   "description": "A chatbot for ESPN Fantasy leagues.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },  
+  "scripts": {
+    "start": "node ./server.js"
   },
   "repository": {
     "type": "git",
