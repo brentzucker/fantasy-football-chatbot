@@ -28,9 +28,9 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-	.matches('/^bot scores', '/scores')
-	.matches('/^bot standings', '/standings')
-	.matches('/^bot transactions', '/transactions') 
+	.matches('/^bot scores/i', '/scores')
+	.matches('/^bot standings/i', '/standings')
+	.matches('/^bot transactions/i', '/transactions') 
 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
 );
 
