@@ -28,10 +28,10 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-	.matches('/^bot/i', '/greeting')
-	.matches('/^bot\sscores/i', '/scores')
-	.matches('/^bot\sstandings/i', '/standings')
-	.matches('/^bot\stransactions/i', '/transactions') 
+	.matches('/bot', '/greeting')
+	.matches('/bot scores', '/scores')
+	.matches('/bot standings', '/standings')
+	.matches('/bot transactions', '/transactions') 
 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
 );
 
