@@ -28,11 +28,16 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-	.matches('/^bot scores/i', '/scores')
-	.matches('/^bot standings/i', '/standings')
-	.matches('/^bot transactions/i', '/transactions') 
+	.matches('/^bot/i', '/greeting')
+	.matches('/^bot\sscores/i', '/scores')
+	.matches('/^bot\sstandings/i', '/standings')
+	.matches('/^bot\stransactions/i', '/transactions') 
 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
 );
+
+bot.dialog('/greeting', function (session) {
+	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
+});
 
 bot.dialog('/scores', function (session) {
 	session.send("Here are the scores");
