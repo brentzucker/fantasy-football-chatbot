@@ -30,7 +30,7 @@ server.post('/api/messages', connector.listen());
 var intents = new builder.IntentDialog();
 bot.dialog('/', intents);
 
-intents.matches('/^bot/i', function (session) {
+intents.matches('/^bot/', function (session) {
 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
 });
 
