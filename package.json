@@ -4,9 +4,6 @@
   "description": "A chatbot for ESPN Fantasy leagues.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },  
-  "scripts": {
     "start": "node ./server.js"
   },
   "repository": {
@@ -20,7 +17,7 @@
   },
   "homepage": "https://github.com/brentzucker/fantasy-football-chatbot#readme",
   "dependencies": {
-    "botbuilder": "^3.0.1",
+    "botbuilder": "^3.1.1",
     "restify": "^4.1.1"
   }
 }
