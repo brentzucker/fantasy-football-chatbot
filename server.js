@@ -27,25 +27,13 @@ server.post('/api/messages', connector.listen());
 //     session.send("Hello World");
 // });
 
-var intents = new builder.IntentDialog();
-bot.dialog('/', intents);
-
-intents.matches('/^bot/', function (session) {
-	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
-});
-
-intents.onDefault(function (session) {
-	session.send("I'm sorry. I didn't understand.");
-
-});
-
-// bot.dialog('/', new builder.IntentDialog()
-// 	.matches('^bot', '/greeting')
-// 	.matches('^bot\sscores', '/scores')
-// 	.matches('^bot\sstandings', '/standings')
-// 	.matches('^bot\stransactions', '/transactions') 
-// 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
-// );
+bot.dialog('/', new builder.IntentDialog()
+	.matches('^bot', '/greeting')
+	// .matches('^bot\sscores', '/scores')
+	// .matches('^bot\sstandings', '/standings')
+	// .matches('^bot\stransactions', '/transactions') 
+	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
+);
 
 bot.dialog('/greeting', function (session) {
 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
