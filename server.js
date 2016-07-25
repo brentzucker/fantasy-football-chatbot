@@ -17,6 +17,8 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
+
+// Handle Bot Framework messages
 server.post('/api/messages', connector.listen());
 
 //=========================================================
@@ -27,7 +29,7 @@ server.post('/api/messages', connector.listen());
 //     session.send("Hello World");
 // });
 
-bot.dialog('/', new builder.IntentDialog()
+bot.dialog('/', new builder.CommandDialog()
 	.matches('^bot', '/greeting')
 	// .matches('^bot\sscores', '/scores')
 	// .matches('^bot\sstandings', '/standings')
