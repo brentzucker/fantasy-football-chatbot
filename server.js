@@ -38,8 +38,8 @@ server.post('/api/messages', connector.listen());
 // 	.beginDialogAction('/greeting')
 // );
 
-bot.beginDialogAction('greeting', '/greeting', { matches: /^bot\shelp/i });
-bot.beginDialogAction('scores', '/scores', { matches: /^bot\sscores/i });
+bot.beginDialogAction('greeting', '/greeting', { matches: /^help/i });
+bot.beginDialogAction('scores', '/scores', { matches: /^scores/i });
 
 
 bot.dialog('/greeting', function (session) {
