@@ -29,13 +29,18 @@ server.post('/api/messages', connector.listen());
 //     session.send("Hello World");
 // });
 
-bot.dialog('/', new builder.CommandDialog()
-	.matches('^bot', '/greeting')
-	.matches('^bot\sscores', '/scores')
-	.matches('^bot\sstandings', '/standings')
-	.matches('^bot\stransactions', '/transactions') 
-	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
-);
+// bot.dialog('/', new builder.CommandDialog()
+// 	.matches('^bot', '/greeting')
+// 	.matches('^bot\sscores', '/scores')
+// 	.matches('^bot\sstandings', '/standings')
+// 	.matches('^bot\stransactions', '/transactions') 
+// 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
+// 	.beginDialogAction('/greeting')
+// );
+
+bot.beginDialogAction('greeting', '/greeting', { matches: /^bot\shelp/i });
+bot.beginDialogAction('scores', '/scores', { matches: /^bot\sscores/i });
+
 
 bot.dialog('/greeting', function (session) {
 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
