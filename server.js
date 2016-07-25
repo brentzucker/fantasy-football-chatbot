@@ -31,9 +31,9 @@ server.post('/api/messages', connector.listen());
 
 bot.dialog('/', new builder.CommandDialog()
 	.matches('^bot', '/greeting')
-	// .matches('^bot\sscores', '/scores')
-	// .matches('^bot\sstandings', '/standings')
-	// .matches('^bot\stransactions', '/transactions') 
+	.matches('^bot\sscores', '/scores')
+	.matches('^bot\sstandings', '/standings')
+	.matches('^bot\stransactions', '/transactions') 
 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
 );
 
