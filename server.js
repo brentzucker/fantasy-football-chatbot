@@ -29,6 +29,14 @@ server.post('/api/messages', connector.listen());
 //     session.send("Hello World");
 // });
 
+bot.dialog('/', new builder.IntentDialog()
+    .matches(/^hello/i, function (session) {
+        session.send("Hi there!");
+    })
+    .onDefault(function (session) {
+        session.send("I didn't understand. Say hello to me!");
+    }));
+
 // bot.dialog('/', new builder.CommandDialog()
 // 	.matches('^bot', '/greeting')
 // 	.matches('^bot\sscores', '/scores')
@@ -38,8 +46,8 @@ server.post('/api/messages', connector.listen());
 // 	.beginDialogAction('/greeting')
 // );
 
-bot.beginDialogAction('greeting', '/greeting', { matches: /^help/i });
-bot.beginDialogAction('scores', '/scores', { matches: /^scores/i });
+// bot.beginDialogAction('greeting', '/greeting', { matches: /^help/i });
+// bot.beginDialogAction('scores', '/scores', { matches: /^scores/i });
 
 
 bot.dialog('/greeting', function (session) {
