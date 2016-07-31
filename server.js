@@ -30,9 +30,7 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-    .matches(/^hello/i, function (session) {
-        session.send("Hi there!");
-    })
+    .matches(/^hello/i, '/greeting')
     .onDefault(function (session) {
         session.send("I didn't understand. Say hello to me!");
     }));
@@ -50,9 +48,9 @@ bot.dialog('/', new builder.IntentDialog()
 // bot.beginDialogAction('scores', '/scores', { matches: /^scores/i });
 
 
-// bot.dialog('/greeting', function (session) {
-// 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
-// });
+bot.dialog('/greeting', function (session) {
+	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
+});
 
 // bot.dialog('/scores', function (session) {
 // 	session.send("Here are the scores");
