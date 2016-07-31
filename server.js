@@ -30,7 +30,7 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-    .matches(/^hello/i, function (session) {
+    .matches(/^bot\shello/i, function (session) {
         session.beginDialog('/greeting', session.userData.profile);
     })
     .onDefault(function (session) {
