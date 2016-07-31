@@ -30,7 +30,9 @@ server.post('/api/messages', connector.listen());
 // });
 
 bot.dialog('/', new builder.IntentDialog()
-    .matches(/^hello/i, '/greeting')
+    .matches(/^hello/i, function (session) {
+        session.beginDialog('/greeting', session.userData.profile);
+    })
     .onDefault(function (session) {
         session.send("I didn't understand. Say hello to me!");
     }));
