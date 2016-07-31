@@ -52,6 +52,7 @@ bot.dialog('/', new builder.IntentDialog()
 
 bot.dialog('/greeting', function (session) {
 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
+	session.endDialog();
 });
 
 // bot.dialog('/scores', function (session) {
