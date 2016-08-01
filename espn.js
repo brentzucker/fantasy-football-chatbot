@@ -1,6 +1,8 @@
+'use strict';
 var restify = require('restify');
 var request = require('request');
 var iconvlite = require('iconv-lite');
+var cheerio = require("cheerio");
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -31,8 +33,52 @@ server.get('/', function(req, res, next) {
 	    	var encoding = 'ISO-8859-1';
        		var content = iconvlite.decode(body, encoding);
 	        // console.log(content);
-	        res.send(content);
+
+	        // Parse the HTML 
+			let $ = cheerio.load(content);
+
+			var standings_list = [];
+			$('tr[class=tableBody]').each(function(i, elemI) {
+				var entry = [];
+				$(this).children().each(function(j, elemJ) {
+					console.log($(this).text());
+					entry.push($(this).text());
+				})
+				standings_list.push(entry);
+			});
+
+			// calculate longest team name
+			var max = -1;
+			for (var i = 0; i < standings_list.length; i++) {
+				if (standings_list[i][0].length > max) {
+					max = standings_list[i][0].length;
+				}
+			}
+
+			// add padding
+			max += 5;
+
+			// Generate standings string
+			var standings = [];
+			for (var i = 0; i < standings_list.length; i++) {
+				var s = standings_list[i];
+
+				var rank = (i+1) + '.';
+				var teamName = s[0];
+				var record = s[1] + '-' + s[2] + '-' + s[3];
+				var winPercentage = s[4];
+				
+				var str = rank + ' ' + teamName + ' '.repeat(max - teamName.length) + record + ' ' + winPercentage;
+
+				standings.push(str);
+			}
+
+	        res.send(standings);
 	        return next();
 	    }
 	});
 });
+
+function scrape() {
+
+}
