@@ -61,7 +61,7 @@ bot.dialog('/scores', function (session) {
 });
 
 bot.dialog('/standings', function (session) {
-	// session.send("Here are the standings");
+	session.send("Here are the standings");
 	var headers = {
 	    'Accept-Language': 'en-US,en;q=0.8',
 	    'Upgrade-Insecure-Requests': '1',
@@ -123,7 +123,13 @@ bot.dialog('/standings', function (session) {
 				standings.push(str);
 			}
 
-	        session.send(standings);
+			// Format mesage string to be sent
+			var standings_str = '';
+			for (var i = 0; i < standings.length; i++) {
+				standings_str += standings[i] + '\n';
+			}
+
+	        session.send(standings_str);
 	        session.endDialog();
 	    }
 	});
