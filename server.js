@@ -117,7 +117,7 @@ bot.dialog('/standings', function (session) {
 				var record = s[1] + '-' + s[2] + '-' + s[3];
 				var winPercentage = s[4];
 				
-				var str = rank + ' ' + teamName + ' '.repeat(max - teamName.length) + record + ' ' + winPercentage;
+				var str = rank + ' ' + teamName + ' ' + record + ' ' + winPercentage;
 
 				standings.push(str);
 			}
