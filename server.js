@@ -38,7 +38,7 @@ bot.dialog('/', new builder.IntentDialog()
     .matches(/^bot\stransactions/i, function (session) {
         session.beginDialog('/transactions', session.userData.profile);
     })
-    .onDefault(function (session) {
+    .matches(/^bot/i, function (session) {
         session.send("I didn't understand. Say hello to me!");
     })
 );
