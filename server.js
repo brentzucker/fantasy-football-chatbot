@@ -25,10 +25,6 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-// bot.dialog('/', function (session) {
-//     session.send("Hello World");
-// });
-
 bot.dialog('/', new builder.IntentDialog()
     .matches(/^bot\shello/i, function (session) {
         session.beginDialog('/greeting', session.userData.profile);
@@ -44,20 +40,8 @@ bot.dialog('/', new builder.IntentDialog()
     })
     .onDefault(function (session) {
         session.send("I didn't understand. Say hello to me!");
-    }));
-
-// bot.dialog('/', new builder.CommandDialog()
-// 	.matches('^bot', '/greeting')
-// 	.matches('^bot\sscores', '/scores')
-// 	.matches('^bot\sstandings', '/standings')
-// 	.matches('^bot\stransactions', '/transactions') 
-// 	.onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
-// 	.beginDialogAction('/greeting')
-// );
-
-// bot.beginDialogAction('greeting', '/greeting', { matches: /^help/i });
-// bot.beginDialogAction('scores', '/scores', { matches: /^scores/i });
-
+    })
+);
 
 bot.dialog('/greeting', function (session) {
 	session.send("Hey I'm your fantasy football bot. I can tell you about scores, standings, and transactions. Try '/bot scores'");
