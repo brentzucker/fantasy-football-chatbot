@@ -110,7 +110,7 @@ bot.dialog('/scores', function (session) {
 				
 				var score = s1[14];
 				
-				var str = teamName1 + ' vs ' + teamName2 + ': ' + score;
+				var str = teamName1 + ' vs ' + teamName2 + '\n' + score;
 
 				scores.push(str);
 			}
