@@ -76,7 +76,6 @@ bot.dialog('/greeting', function (session) {
 });
 
 bot.dialog('/scores', function (session) {
-	session.send("Here are the scores");
 	options['url'] = 'http://games.espn.com/flb/scoreboard?leagueId=182799&seasonId=2016';
 	request(options, function(error, response, body) {
 	    if (!error && response.statusCode == 200) {
@@ -118,7 +117,12 @@ bot.dialog('/scores', function (session) {
 				scores.push(str);
 			}
 
-	        session.send(scores);
+			var scores_str = 'Here are the scores\n';
+			for (var i = 0; i < scores.length; i++) {
+				scores_str += scores[i] + '\n';
+			}
+
+	        session.send(scores_str);
 	        session.endDialog();
 	    }
 	});
