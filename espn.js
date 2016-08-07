@@ -15,7 +15,6 @@ var headers = {
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Referer': 'http://games.espn.go.com/flb/leagueoffice?leagueId=182799&seasonId=2016',
     'Connection': 'keep-alive',
 	'Cookie': process.env.COOKIE
 };
@@ -27,13 +26,12 @@ var options = {
 };
 
 // Test Endpoint
-server.get('/', function(req, res, next) {
+server.get('/standings', function(req, res, next) {
 	options['url'] = 'http://games.espn.go.com/flb/standings?leagueId=182799&seasonId=2016';
 	request(options, function(error, response, body) {
 	    if (!error && response.statusCode == 200) {
 	    	var encoding = 'ISO-8859-1';
        		var content = iconvlite.decode(body, encoding);
-	        // console.log(content);
 
 	        // Parse the HTML 
 			let $ = cheerio.load(content);
@@ -42,7 +40,6 @@ server.get('/', function(req, res, next) {
 			$('tr[class=tableBody]').each(function(i, elemI) {
 				var entry = [];
 				$(this).children().each(function(j, elemJ) {
-					console.log($(this).text());
 					entry.push($(this).text());
 				})
 				standings_list.push(entry);
@@ -56,12 +53,19 @@ server.get('/', function(req, res, next) {
 				var rank = (i+1) + '.';
 				var teamName = s[0];
 				var record = s[1] + '-' + s[2] + '-' + s[3];
-				var winPercentage = s[4];
 				
-				var str = rank + ' ' + teamName + ' ' + record + ' ' + winPercentage;
+				var str = rank + ' ' + teamName + ' ' + record;
 
 				standings.push(str);
 			}
+
+			// Format mesage string to be sent
+			var standings_str = 'Here are the standings\n';
+			for (var i = 0; i < standings.length; i++) {
+				standings_str += standings[i] + '\n';
+			}
+
+			console.log(standings_str);
 
 	        res.send(standings);
 	        return next();
@@ -75,7 +79,6 @@ server.get('/scores', function(req, res, next) {
 	    if (!error && response.statusCode == 200) {
 	    	var encoding = 'ISO-8859-1';
        		var content = iconvlite.decode(body, encoding);
-	        // console.log(content);
 
 	        // Parse the HTML 
 			let $ = cheerio.load(content);
@@ -111,6 +114,12 @@ server.get('/scores', function(req, res, next) {
 
 				scores.push(str);
 			}
+
+			var scores_str = 'Here are the scores\n';
+			for (var i = 0; i < scores.length; i++) {
+				scores_str += scores[i] + '\n';
+			}
+			console.log(scores_str);
 
 	        res.send(scores);
 	        return next();
