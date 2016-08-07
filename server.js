@@ -118,7 +118,7 @@ bot.dialog('/scores', function (session) {
 			var scores_str = 'Here are the scores\n';
 			for (var i = 0; i < scores.length; i++) {
 				scores_str += scores[i] + '\n';
-				session.send(scores[i] + '\n');
+				session.send(scores[i]);
 			}
 
 	        // session.send(scores_str);
