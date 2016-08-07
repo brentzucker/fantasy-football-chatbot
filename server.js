@@ -115,13 +115,13 @@ bot.dialog('/scores', function (session) {
 				scores.push(str);
 			}
 
-			var scores_str = 'Here are the scores\n';
+			var scores_str = 'Here are the scores\r\n';
 			for (var i = 0; i < scores.length; i++) {
-				scores_str += scores[i] + '\n';
-				session.send(scores[i]);
+				scores_str += scores[i] + '\r\n';
+				// session.send(scores[i]);
 			}
 
-	        // session.send(scores_str);
+	        session.send(scores_str);
 	        session.endDialog();
 	    }
 	});
