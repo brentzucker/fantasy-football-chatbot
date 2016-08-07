@@ -6,6 +6,26 @@ var iconvlite = require('iconv-lite');
 var cheerio = require("cheerio");
 
 //=========================================================
+// ESPN Scraper set up
+//=========================================================
+
+var headers = {
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Referer': 'http://games.espn.go.com/flb/leagueoffice?leagueId=182799&seasonId=2016',
+    'Connection': 'keep-alive',
+	'Cookie': process.env.COOKIE
+};
+
+var options = {
+    // url: 'http://games.espn.go.com/flb/standings?leagueId=182799&seasonId=2016',
+    headers: headers,
+    encoding: null
+};
+
+//=========================================================
 // Bot Setup
 //=========================================================
 
@@ -57,26 +77,55 @@ bot.dialog('/greeting', function (session) {
 
 bot.dialog('/scores', function (session) {
 	session.send("Here are the scores");
-	session.endDialog();
+	options['url'] = 'http://games.espn.com/flb/scoreboard?leagueId=182799&seasonId=2016';
+	request(options, function(error, response, body) {
+	    if (!error && response.statusCode == 200) {
+	    	var encoding = 'ISO-8859-1';
+       		var content = iconvlite.decode(body, encoding);
+
+	        // Parse the HTML 
+			let $ = cheerio.load(content);
+
+			var scores_list = [];
+			$('tr[class=linescoreTeamRow]').each(function(i, elemI) {
+				var entry = [];
+				$(this).children().each(function(j, elemJ) {
+					// console.log($(this).text());
+					entry.push($(this).text());
+				})
+				scores_list.push(entry);
+			});
+
+			// Generate scores string
+			var scores = [];
+			for (var i = 1; i < scores_list.length; i+=2) {
+				var s1 = scores_list[i-1];
+				var s2 = scores_list[i];
+
+				// Display just team name
+				var arr_teamName1 = s1[0].split(" ");
+				arr_teamName1.splice(-1,1);
+				var teamName1 = arr_teamName1.join(" ");
+
+				var arr_teamName2 = s2[0].split(" ");
+				arr_teamName2.splice(-1,1);
+				var teamName2 = arr_teamName2.join(" ");
+				
+				var score = s1[14];
+				
+				var str = teamName1 + ' vs ' + teamName2 + ': ' + score;
+
+				scores.push(str);
+			}
+
+	        session.send(scores);
+	        session.endDialog();
+	    }
+	});
 });
 
 bot.dialog('/standings', function (session) {
-	var headers = {
-	    'Accept-Language': 'en-US,en;q=0.8',
-	    'Upgrade-Insecure-Requests': '1',
-	    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
-	    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-	    'Referer': 'http://games.espn.go.com/flb/leagueoffice?leagueId=182799&seasonId=2016',
-	    'Connection': 'keep-alive',
-		'Cookie': process.env.COOKIE
-	};
-
-	var options = {
-	    url: 'http://games.espn.go.com/flb/standings?leagueId=182799&seasonId=2016',
-	    headers: headers,
-	    encoding: null
-	};
-
+	options['url'] = 'http://games.espn.go.com/flb/standings?leagueId=182799&seasonId=2016';
 	request(options, function(error, response, body) {
 	    if (!error && response.statusCode == 200) {
 	    	var encoding = 'ISO-8859-1';
@@ -95,17 +144,6 @@ bot.dialog('/standings', function (session) {
 				})
 				standings_list.push(entry);
 			});
-
-			// calculate longest team name
-			var max = -1;
-			for (var i = 0; i < standings_list.length; i++) {
-				if (standings_list[i][0].length > max) {
-					max = standings_list[i][0].length;
-				}
-			}
-
-			// add padding
-			max += 5;
 
 			// Generate standings string
 			var standings = [];
