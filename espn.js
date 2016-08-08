@@ -67,7 +67,7 @@ server.get('/standings', function(req, res, next) {
 
 			console.log(standings_str);
 
-	        res.send(standings);
+	        res.send(standings_str);
 	        return next();
 	    }
 	});
@@ -121,7 +121,7 @@ server.get('/scores', function(req, res, next) {
 			}
 			console.log(scores_str);
 
-	        res.send(scores);
+	        res.send(scores_str);
 	        return next();
 	    }
 	});

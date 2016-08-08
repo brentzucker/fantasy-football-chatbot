@@ -110,15 +110,14 @@ bot.dialog('/scores', function (session) {
 				
 				var score = s1[14];
 				
-				var str = teamName1 + ' vs ' + teamName2 + '\n' + score;
+				var str = teamName1 + ' vs ' + teamName2 + ': ' + score;
 
 				scores.push(str);
 			}
 
-			var scores_str = 'Here are the scores\r\n';
+			var scores_str = 'Here are the scores\n';
 			for (var i = 0; i < scores.length; i++) {
-				scores_str += scores[i] + '\r\n';
-				// session.send(scores[i]);
+				scores_str += scores[i] + '\n';
 			}
 
 	        session.send(scores_str);
