@@ -52,10 +52,10 @@ bot.dialog('/', new builder.IntentDialog()
         session.beginDialog('/greeting', session.userData.profile);
     })
     .matches(/^bot\sscores/i, function (session) {
-        session.beginDialog('/scores', session.userData.profile);
+        session.beginDialog('/standings', session.userData.profile);
     })    
     .matches(/^bot\sstandings/i, function (session) {
-        session.beginDialog('/standings', session.userData.profile);
+        session.beginDialog('/scores', session.userData.profile);
     })
     .matches(/^bot\stransactions/i, function (session) {
         session.beginDialog('/transactions', session.userData.profile);
