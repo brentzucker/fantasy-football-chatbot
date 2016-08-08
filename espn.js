@@ -110,7 +110,7 @@ server.get('/scores', function(req, res, next) {
 				
 				var score = s1[14];
 				
-				var str = teamName1 + ' vs ' + teamName2 + ': ' + score;
+				var str = (((i-1)/2)+1) + '. ' + teamName1 + ' vs ' + teamName2 + ': ' + score;
 
 				scores.push(str);
 			}
