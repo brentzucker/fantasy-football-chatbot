@@ -127,6 +127,7 @@ bot.dialog('/scores', function (session) {
 });
 
 bot.dialog('/standings', function (session) {
+	session.sendTyping();
 	options['url'] = 'http://games.espn.go.com/flb/standings?leagueId=182799&seasonId=2016';
 	request(options, function(error, response, body) {
 	    if (!error && response.statusCode == 200) {
